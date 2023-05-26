@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<!-- Created By CodingNepal - www.codingnepalweb.com -->
+<!-- Created By A.H. Abir -->
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8">
-   <!---- <title> Responsive Contact Us Form | CodingLab </title>--->
+    <title> Responsive Contact Us Form | A.H. Abir </title>
     <link rel="stylesheet" href="style.css">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
    </head>
@@ -14,7 +14,7 @@
       <div class="image-box">
       <img src="contact.png" alt="contact">
       </div>
-    <form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLScmt4dHF7yc8u--Neu7Nn6KpqK0xAc_Ii1BAWywrNKrARMDww/formResponse" method="POST">
+    <form name="submit-to-google-sheet" method="POST">
       <div class="topic">Send me a message</div>
       <div class="input-box">
         <input type="text" name="name" input:Lg5SV required>
@@ -30,9 +30,30 @@
       <div class="input-box">
         <input type="submit" value="Send Message">
       </div>
+      <span id="msg"></span>
     </form>
   </div>
   <a href="#" style="color:crimson;text-decoration: none;margin-left: 15px;">Go back</a>
   </div>
+  
+  <script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbxZOLiV6R0Uk6NDRgzIoZVDeeXIebWeWK5h1hFA4F6Ds9_jWQ2efFQ9Pkf_4cyDIXDh/exec'
+  const form = document.forms['submit-to-google-sheet']
+  const msg = document.getElementById('msg')
+
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => {
+        msg.innerHTML = "Thank You for your message!!"
+      })
+      setTimeout(function() {
+        msg.innerHTML = ""
+
+      }, 5000)
+      form.reset()
+      .catch(error => console.error('Error!', error.message))
+  })
+</script>
 </body>
 </html>
